@@ -4,10 +4,7 @@
   </form>
 
   <figure class="lightbox__figure">
-    <picture>
-      <source class="lightbox__modern" type="image/avif" />
-      <img class="lightbox__img" alt="" />
-    </picture>
+    <img class="lightbox__img" alt="" decoding="async" />
   </figure>
 
   <div class="lightbox__controls">
@@ -87,20 +84,41 @@
   const triggers = Array.from(document.querySelectorAll('.art-open'));
 
   if (dialog instanceof HTMLDialogElement && triggers.length) {
-    const modern = dialog.querySelector('.lightbox__modern');
     const img = dialog.querySelector('.lightbox__img');
     const position = dialog.querySelector('.lightbox__pos');
     let current = 0;
+    let request = 0;
 
-    const show = (index) => {
+    const at = (index) => triggers[(index + triggers.length) % triggers.length];
+
+    const preload = (index) => {
+      const warm = new Image();
+      warm.src = at(index).dataset.full;
+    };
+
+    const show = async (index) => {
       current = (index + triggers.length) % triggers.length;
-      const data = triggers[current].dataset;
-      modern.srcset = data.modern;
-      img.src = data.fallback;
+      const data = at(current).dataset;
+      const mine = ++request;
+
+      position.textContent = `${current + 1} / ${triggers.length}`;
+
+      const next = new Image();
+      next.src = data.full;
+      try {
+        await next.decode();
+      } catch {
+        if (mine !== request) return;
+      }
+      if (mine !== request) return;
+
+      img.src = data.full;
       img.alt = data.alt;
       img.width = Number(data.w);
       img.height = Number(data.h);
-      position.textContent = `${current + 1} / ${triggers.length}`;
+
+      preload(current + 1);
+      preload(current - 1);
     };
 
     triggers.forEach((trigger, index) => {
@@ -130,7 +148,7 @@
     });
 
     dialog.addEventListener('close', () => {
-      triggers[current].focus();
+      at(current).focus();
     });
   }
 </script>

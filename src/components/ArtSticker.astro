@@ -29,14 +29,13 @@ const {
   style,
 } = Astro.props;
 
-const fullWidth = Math.min(1600, artwork.image.width);
+const fullWidth = Math.min(1400, artwork.image.width);
 
-const [modern, fallback] = interactive
-  ? await Promise.all([
-      getImage({ src: artwork.image, format: 'avif', width: fullWidth }),
-      getImage({ src: artwork.image, format: 'jpeg', width: fullWidth }),
-    ])
-  : [null, null];
+const formats = import.meta.env.DEV ? ['webp'] : ['avif', 'webp'];
+
+const full = interactive
+  ? await getImage({ src: artwork.image, format: 'webp', width: fullWidth })
+  : null;
 ---
 
 <Sticker rot={artwork.rot} plate={artwork.plate} class={className} style={style}>
@@ -45,15 +44,14 @@ const [modern, fallback] = interactive
       <button
         type="button"
         class="art-open"
-        data-modern={modern.src}
-        data-fallback={fallback.src}
+        data-full={full.src}
         data-alt={artwork.alt}
         data-w={fullWidth}
         data-h={Math.round((fullWidth / artwork.image.width) * artwork.image.height)}
       >
         <Picture
           src={artwork.image}
-          formats={['avif', 'webp']}
+          formats={formats}
           fallbackFormat="jpeg"
           widths={widths}
           sizes={sizes}
@@ -66,7 +64,7 @@ const [modern, fallback] = interactive
     ) : (
       <Picture
         src={artwork.image}
-        formats={['avif', 'webp']}
+        formats={formats}
         fallbackFormat="jpeg"
         widths={widths}
         sizes={sizes}
