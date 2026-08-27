@@ -173,12 +173,10 @@ a {
 }
 
 .wordmark {
-  font-family: var(--font-body);
-  font-weight: 800;
-  font-variation-settings: 'opsz' 96, 'wght' 800;
-  font-size: var(--text-3xl);
-  line-height: 0.82;
-  letter-spacing: -0.03em;
+  font-family: var(--font-display);
+  font-size: min(var(--text-3xl), 14vw);
+  line-height: 0.9;
+  letter-spacing: -0.02em;
   text-transform: lowercase;
 }
 

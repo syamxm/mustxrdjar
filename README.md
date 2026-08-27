@@ -1,6 +1,6 @@
 # mustxrdjar
 
-Portfolio site for the artist **mustxrdjar** — 15 painted works and 7 non-painted, plus commissions.
+Portfolio site for the artist **mustxrdjar** — 15 painted works and 7 sketched, plus commissions.
 
 Astro, static output, plain CSS with custom properties, vanilla JS. Two runtime dependencies: `astro` and `sharp`.
 
@@ -67,7 +67,7 @@ Start it **DNS only**. GitHub cannot complete its ACME challenge and issue the c
 ```
 art/                    the 22 artworks — the only images that ship
   painted/              15
-  non-painted/          7
+  sketched/             7
 public/
   fonts/                self-hosted woff2, latin subset
   favicon.svg           hand-drawn star

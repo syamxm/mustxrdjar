@@ -6,8 +6,8 @@ All faces are self-hosted from `public/fonts/` as latin-subset `.woff2`, downloa
 
 | Face | Role | Licence | Source |
 | --- | --- | --- | --- |
-| Bricolage Grotesque | wordmark, body, UI | SIL Open Font Licence 1.1 | [ateliertriay/bricolage](https://github.com/ateliertriay/bricolage) |
-| Ga Maamli | badges, section headings | SIL Open Font Licence 1.1 | [SorkinType/GaMaamli](https://github.com/SorkinType/GaMaamli) |
+| Bricolage Grotesque | body copy | SIL Open Font Licence 1.1 | [ateliertriay/bricolage](https://github.com/ateliertriay/bricolage) |
+| Monocraft | wordmark, section headings, badges, UI | SIL Open Font Licence 1.1 | [IdreesInc/Monocraft](https://github.com/IdreesInc/Monocraft) |
 | Permanent Marker | accent, one word | Apache Licence 2.0 | [google/fonts](https://github.com/google/fonts/tree/main/apache/permanentmarker) |
 
 Permanent Marker is Apache 2.0, not OFL. Because the `.woff2` is redistributed from this repo, `licenses/APACHE2-permanent-marker.txt` ships with it as the licence requires.

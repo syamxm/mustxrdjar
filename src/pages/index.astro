@@ -6,16 +6,16 @@ import Lightbox from '../components/Lightbox.astro';
 import About from '../components/About.astro';
 import Contact from '../components/Contact.astro';
 import Footer from '../components/Footer.astro';
-import { painted, nonPainted } from '../data/artworks.js';
+import { painted, sketched } from '../data/artworks.js';
 
-const selectedSlugs = ['painted-09', 'painted-13', 'painted-02', 'non-painted-06', 'painted-04'];
-const bySlug = new Map([...painted, ...nonPainted].map((item) => [item.slug, item]));
+const selectedSlugs = ['painted-09', 'painted-13', 'painted-02', 'sketched-06', 'painted-04'];
+const bySlug = new Map([...painted, ...sketched].map((item) => [item.slug, item]));
 const selected = selectedSlugs.map((slug) => bySlug.get(slug));
 ---
 
 <Base
   title="mustxrdjar"
-  description="Painted and non-painted work by mustxrdjar. Commissions open."
+  description="Painted and sketched work by mustxrdjar. Commissions open."
 >
   <main class="page">
     <Hero />
@@ -32,10 +32,10 @@ const selected = selectedSlugs.map((slug) => bySlug.get(slug));
     />
 
     <Gallery
-      id="non-painted"
-      heading="non-painted"
+      id="sketched"
+      heading="sketched"
       count="7 pieces"
-      items={nonPainted}
+      items={sketched}
       variant="sparse"
       rotScale={0.3}
     />

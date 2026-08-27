@@ -1,7 +1,7 @@
 import { alt } from './alt.js';
 
 const paintedFiles = import.meta.glob('/art/painted/*.{jpg,png}', { eager: true, import: 'default' });
-const nonPaintedFiles = import.meta.glob('/art/non-painted/*.{jpg,png}', { eager: true, import: 'default' });
+const sketchedFiles = import.meta.glob('/art/sketched/*.{jpg,png}', { eager: true, import: 'default' });
 
 function toArtworks(files, body) {
   return Object.entries(files)
@@ -20,5 +20,5 @@ function toArtworks(files, body) {
 }
 
 export const painted = toArtworks(paintedFiles, 'painted');
-export const nonPainted = toArtworks(nonPaintedFiles, 'non-painted');
-export const all = [...painted, ...nonPainted];
+export const sketched = toArtworks(sketchedFiles, 'sketched');
+export const all = [...painted, ...sketched];

@@ -2,7 +2,7 @@
 import ArtSticker from './ArtSticker.astro';
 import Sticker from './Sticker.astro';
 import Badge from './Badge.astro';
-import { painted, nonPainted } from '../data/artworks.js';
+import { painted, sketched } from '../data/artworks.js';
 
 function pick(list, slug) {
   const found = list.find((item) => item.slug === slug);
@@ -16,7 +16,7 @@ const collage = [
   { art: pick(painted, 'painted-14'), l: 27, t: 2, w: 20, rot: -3, plate: 1, z: 3 },
   { art: pick(painted, 'painted-06'), l: 44, t: 22, w: 19, rot: 4, plate: 3, z: 5 },
   { art: pick(painted, 'painted-11'), l: 60, t: 0, w: 18, rot: -4, plate: 6, z: 3 },
-  { art: pick(nonPainted, 'non-painted-04'), l: 74, t: 24, w: 18, rot: 2, plate: 4, z: 2 },
+  { art: pick(sketched, 'sketched-04'), l: 74, t: 24, w: 18, rot: 2, plate: 4, z: 2 },
 ];
 ---
 
@@ -40,7 +40,7 @@ const collage = [
   <div class="hero__mark">
     <div class="hero__name">
       <h1 class="wordmark">mustxrdjar</h1>
-      <p class="hero__count">22 pieces. painted and not.</p>
+      <p class="hero__count">22 pieces. painted and sketched.</p>
     </div>
   </div>
 
@@ -49,8 +49,8 @@ const collage = [
       <a href="#painted">
         <Sticker rot={-2.5} plate={2}><span class="hero__word">painted</span></Sticker>
       </a>
-      <a href="#non-painted">
-        <Sticker rot={3} plate={4}><span class="hero__word">non-painted</span></Sticker>
+      <a href="#sketched">
+        <Sticker rot={3} plate={4}><span class="hero__word">sketched</span></Sticker>
       </a>
     </nav>
     <Badge rot={-7} plate={1} size="clamp(8rem, 6rem + 9vw, 12rem)">

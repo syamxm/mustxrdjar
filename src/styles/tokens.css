@@ -23,7 +23,7 @@
   --plate-5: var(--gum);
   --plate-6: var(--orange);
 
-  --font-display: 'Ga Maamli', 'Trebuchet MS', 'Arial Black', sans-serif;
+  --font-display: 'Monocraft', ui-monospace, 'Courier New', monospace;
   --font-body: 'Bricolage Grotesque', 'Trebuchet MS', system-ui, sans-serif;
   --font-marker: 'Permanent Marker', var(--font-display);
 

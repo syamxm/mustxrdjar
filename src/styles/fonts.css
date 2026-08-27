@@ -7,16 +7,16 @@
   src: url(/fonts/bricolage-grotesque.woff2) format('woff2');
 }
 @font-face {
-  font-family: 'Ga Maamli';
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-  src: url(/fonts/ga-maamli.woff2) format('woff2');
-}
-@font-face {
   font-family: 'Permanent Marker';
   font-style: normal;
   font-weight: 400;
   font-display: swap;
   src: url(/fonts/permanent-marker.woff2) format('woff2');
+}
+@font-face {
+  font-family: 'Monocraft';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(/fonts/monocraft.woff2) format('woff2');
 }
