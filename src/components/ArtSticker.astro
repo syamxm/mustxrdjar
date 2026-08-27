@@ -1,0 +1,40 @@
+---
+import { Picture } from 'astro:assets';
+import Sticker from './Sticker.astro';
+
+interface Props {
+  artwork: {
+    slug: string;
+    body: string;
+    image: ImageMetadata;
+    alt: string;
+    plate: number;
+    rot: number;
+  };
+  widths?: number[];
+  sizes?: string;
+  loading?: 'lazy' | 'eager';
+  class?: string;
+}
+
+const {
+  artwork,
+  widths = [320, 480, 720, 960],
+  sizes = '(max-width: 40rem) 90vw, 30rem',
+  loading = 'lazy',
+  class: className,
+} = Astro.props;
+---
+
+<Sticker rot={artwork.rot} plate={artwork.plate} class={className}>
+  <Picture
+    src={artwork.image}
+    formats={['avif', 'webp']}
+    fallbackFormat="jpeg"
+    widths={widths}
+    sizes={sizes}
+    alt={artwork.alt}
+    loading={loading}
+    decoding="async"
+  />
+</Sticker>
