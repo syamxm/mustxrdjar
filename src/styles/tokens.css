@@ -5,8 +5,15 @@
 }
 
 :root {
-  --wall: #000000;
+  --wall: #22192f;
+  --ink: #000000;
   --paper: #ffffff;
+
+  --star-ink: #d9d0ea;
+  --star-opacity: 0.2;
+  --pattern: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='72' height='72'%3E%3Cg fill='%23ffffff' fill-opacity='0.028'%3E%3Cpath d='M2 3 L35 1 L37 34 L3 36 Z'/%3E%3Cpath d='M38 38 L71 36 L70 70 L36 71 Z'/%3E%3C/g%3E%3C/svg%3E");
+  --pattern-size: 72px 72px;
+  --star-grit: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='46' height='46'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.6' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3CfeComponentTransfer%3E%3CfeFuncR type='linear' slope='2.6' intercept='-0.5'/%3E%3CfeFuncG type='linear' slope='2.6' intercept='-0.5'/%3E%3CfeFuncB type='linear' slope='2.6' intercept='-0.5'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='46' height='46' filter='url(%23g)'/%3E%3C/svg%3E");
   --paper-back: #d7d2c8;
 
   --red: #e4141b;
@@ -17,7 +24,7 @@
   --gum: #f06e9e;
 
   --plate-1: var(--red);
-  --plate-2: var(--chrome);
+  --plate-2: #ffc400;
   --plate-3: var(--cobalt);
   --plate-4: var(--grass);
   --plate-5: var(--gum);
@@ -55,6 +62,10 @@
 
   --ease-set: cubic-bezier(0.2, 0.9, 0.24, 1);
   --dur-peel: 260ms;
+
+  --badge-ink: #6d090e;
+  --ui: var(--chrome);
+  --accent: var(--chrome);
 
   --z-grain: 3;
   --z-lightbox: 10;

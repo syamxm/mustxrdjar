@@ -25,7 +25,7 @@ html {
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--chrome);
+  background: var(--ui);
   background-clip: padding-box;
 }
 
@@ -55,7 +55,9 @@ img {
 }
 
 body {
-  background: var(--wall);
+  background-color: var(--wall);
+  background-image: var(--pattern);
+  background-size: var(--pattern-size);
   color: var(--paper);
   font-family: var(--font-body);
   font-size: var(--text-base);
@@ -93,7 +95,7 @@ a {
 }
 
 :focus-visible {
-  outline: 3px solid var(--chrome);
+  outline: 3px solid var(--ui);
   outline-offset: 4px;
 }
 
@@ -128,8 +130,8 @@ a {
   top: -100%;
   z-index: 20;
   padding: 0.5em 1em;
-  background: var(--chrome);
-  color: var(--wall);
+  background: var(--ui);
+  color: var(--ink);
   font-family: var(--font-display);
   text-decoration: none;
 }
@@ -168,7 +170,7 @@ a {
 
 [data-placeholder] {
   color: color-mix(in srgb, var(--paper) 72%, transparent);
-  text-decoration-color: var(--chrome);
+  text-decoration-color: var(--ui);
   text-decoration-thickness: 2px;
 }
 

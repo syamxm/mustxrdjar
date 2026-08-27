@@ -6,6 +6,7 @@ import Lightbox from '../components/Lightbox.astro';
 import About from '../components/About.astro';
 import Contact from '../components/Contact.astro';
 import Footer from '../components/Footer.astro';
+import StarGap from '../components/StarGap.astro';
 import { painted, sketched } from '../data/artworks.js';
 
 const selectedSlugs = ['painted-09', 'painted-13', 'painted-02', 'sketched-06', 'painted-04'];
@@ -20,7 +21,11 @@ const selected = selectedSlugs.map((slug) => bySlug.get(slug));
   <main class="page">
     <Hero />
 
+    <StarGap arrangement={0} />
+
     <Gallery id="selected" heading="selected" items={selected} variant="row" rotScale={1} />
+
+    <StarGap arrangement={1} />
 
     <Gallery
       id="painted"
@@ -31,6 +36,8 @@ const selected = selectedSlugs.map((slug) => bySlug.get(slug));
       rotScale={1}
     />
 
+    <StarGap arrangement={2} />
+
     <Gallery
       id="sketched"
       heading="sketched"
@@ -39,7 +46,11 @@ const selected = selectedSlugs.map((slug) => bySlug.get(slug));
       variant="sparse"
       rotScale={0.3}
     />
+    <StarGap arrangement={3} />
+
     <About />
+    <StarGap arrangement={4} />
+
     <Contact />
     <Footer />
   </main>

@@ -1,0 +1,127 @@
+---
+import { stars } from '../data/stars.js';
+
+interface Props {
+  arrangement?: number;
+}
+
+const { arrangement = 0 } = Astro.props;
+
+const layouts = [
+  [
+    { id: 'shooting', left: 3, top: 14, size: 8.5, rot: -12, drift: 1 },
+    { id: 'card', left: 26, top: 62, size: 3.6, rot: 9, drift: 0 },
+    { id: 'thin', left: 44, top: 8, size: 4.4, rot: -22, drift: 2 },
+    { id: 'felt', left: 68, top: 52, size: 5.2, rot: 15, drift: 0 },
+    { id: 'card', left: 89, top: 18, size: 6.2, rot: -6, drift: 1 },
+  ],
+  [
+    { id: 'spiral', left: 6, top: 46, size: 6.8, rot: 14, drift: 2 },
+    { id: 'thin', left: 23, top: 12, size: 3.4, rot: 26, drift: 1 },
+    { id: 'card', left: 48, top: 58, size: 4.8, rot: -14, drift: 0 },
+    { id: 'felt', left: 71, top: 16, size: 5.6, rot: -8, drift: 1 },
+    { id: 'shooting', left: 87, top: 60, size: 7.4, rot: 5, drift: 0 },
+  ],
+  [
+    { id: 'felt', left: 4, top: 24, size: 6.4, rot: 17, drift: 1 },
+    { id: 'card', left: 29, top: 66, size: 3.8, rot: -19, drift: 2 },
+    { id: 'spiral', left: 52, top: 14, size: 5.4, rot: 8, drift: 0 },
+    { id: 'thin', left: 74, top: 58, size: 4.2, rot: -27, drift: 1 },
+    { id: 'card', left: 91, top: 22, size: 5.8, rot: 12, drift: 2 },
+  ],
+  [
+    { id: 'card', left: 7, top: 56, size: 5.6, rot: -25, drift: 2 },
+    { id: 'shooting', left: 27, top: 14, size: 7.6, rot: 8, drift: 0 },
+    { id: 'thin', left: 55, top: 62, size: 3.9, rot: 19, drift: 1 },
+    { id: 'spiral', left: 78, top: 20, size: 6, rot: 11, drift: 1 },
+    { id: 'felt', left: 93, top: 58, size: 4.6, rot: -13, drift: 0 },
+  ],
+  [
+    { id: 'thin', left: 5, top: 20, size: 4.8, rot: 23, drift: 0 },
+    { id: 'spiral', left: 31, top: 56, size: 5.2, rot: -11, drift: 1 },
+    { id: 'card', left: 58, top: 12, size: 6.4, rot: 16, drift: 2 },
+    { id: 'shooting', left: 82, top: 54, size: 7, rot: -7, drift: 0 },
+  ],
+];
+
+const placed = layouts[arrangement % layouts.length];
+const byId = new Map(stars.map((s) => [s.id, s]));
+---
+
+<div class="star-gap" aria-hidden="true">
+  {
+    placed.map(({ id, left, top, size, rot, drift }) => {
+      const star = byId.get(id);
+      return (
+        <svg
+          class="star-gap__star"
+          data-drift={drift}
+          viewBox={star.viewBox}
+          style={`--l:${left}%;--t:${top}%;--s:${size}rem;--r:${rot}deg`}
+          set:html={star.body}
+        />
+      );
+    })
+  }
+</div>
+
+<style>
+  .star-gap {
+    position: relative;
+    overflow: clip;
+    height: clamp(6.5rem, 11vw, 13rem);
+    pointer-events: none;
+  }
+
+  .star-gap__star {
+    position: absolute;
+    left: var(--l);
+    top: var(--t);
+    width: var(--s);
+    height: auto;
+    rotate: var(--r);
+    fill: var(--star-ink);
+    stroke: var(--star-ink);
+    opacity: var(--star-opacity);
+    mask-image: var(--star-grit);
+    mask-size: 46px 46px;
+    mask-mode: luminance;
+  }
+
+  .star-gap__star[data-drift='1'] {
+    animation: drift-a 96s ease-in-out infinite alternate;
+  }
+
+  .star-gap__star[data-drift='2'] {
+    animation: drift-b 124s ease-in-out infinite alternate;
+  }
+
+  @keyframes drift-a {
+    to {
+      translate: 7px -5px;
+    }
+  }
+
+  @keyframes drift-b {
+    to {
+      translate: -6px 6px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .star-gap__star {
+      animation: none;
+    }
+  }
+
+  @media (max-width: 40rem) {
+    .star-gap__star {
+      left: clamp(5%, var(--l), 76%);
+      opacity: calc(var(--star-opacity) * 0.85);
+    }
+
+    .star-gap__star:nth-child(n + 4) {
+      display: none;
+    }
+  }
+</style>
