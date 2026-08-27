@@ -1,0 +1,42 @@
+---
+---
+
+<section class="band" id="about">
+  <header class="band__head">
+    <h2 class="band__title">about</h2>
+  </header>
+
+  <div class="about">
+    <!-- BIO -->
+    <p class="prose about__bio" data-placeholder>
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed accumsan mauris
+      sed odio bibendum, in molestie libero tempor. Suspendisse pulvinar, enim nec
+      mattis accumsan, urna risus blandit ex, eu consequat augue nibh nec ipsum.
+      Phasellus luctus aliquet lorem, eget ultricies metus fermentum quis. Mauris
+      leo arcu, vulputate sed erat vitae, tempor pellentesque leo. Nulla tempus,
+      justo a semper ullamcorper, est diam tristique sem, in egestas lacus quam sit
+      amet felis. Fusce tincidunt, sapien in dictum finibus, urna ex elementum
+      velit, tristique vestibulum magna eros eu nisl. Donec porta massa vel quam
+      iaculis blandit non vel nunc. Nunc mi sem, aliquam.
+    </p>
+  </div>
+</section>
+
+<style>
+  .about {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-xl);
+  }
+
+  .about__bio {
+    flex: 1 1 28rem;
+  }
+
+  .about__bio[data-placeholder] {
+    padding-left: var(--space-md);
+    border-left: 4px solid var(--chrome);
+  }
+</style>

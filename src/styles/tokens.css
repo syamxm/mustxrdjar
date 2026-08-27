@@ -60,8 +60,17 @@
   --z-lightbox: 10;
 }
 
+@media (max-width: 40rem) {
+  :root {
+    --rot-scale: 0.4;
+    --plate-x: 0.35rem;
+    --plate-y: 0.35rem;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   :root {
     --dur-peel: 1ms;
+    --rot-scale: 0;
   }
 }

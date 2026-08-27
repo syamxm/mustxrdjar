@@ -62,6 +62,7 @@ h3 {
 
 a {
   color: inherit;
+  text-underline-offset: 0.2em;
 }
 
 :focus-visible {
@@ -92,6 +93,56 @@ a {
 .scrawl {
   font-family: var(--font-marker);
   text-transform: none;
+}
+
+.skip {
+  position: absolute;
+  left: var(--space-md);
+  top: -100%;
+  z-index: 20;
+  padding: 0.5em 1em;
+  background: var(--chrome);
+  color: var(--wall);
+  font-family: var(--font-display);
+  text-decoration: none;
+}
+
+.skip:focus-visible {
+  top: var(--space-md);
+}
+
+:target {
+  scroll-margin-top: var(--space-lg);
+}
+
+.band {
+  padding-block: var(--space-xl);
+  scroll-margin-top: var(--space-lg);
+}
+
+.band__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--space-md);
+  margin-bottom: var(--space-xl);
+}
+
+.band__title {
+  font-size: var(--text-2xl);
+}
+
+.band__count {
+  font-size: var(--text-sm);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  opacity: 0.55;
+}
+
+[data-placeholder] {
+  color: color-mix(in srgb, var(--paper) 72%, transparent);
+  text-decoration-color: var(--chrome);
+  text-decoration-thickness: 2px;
 }
 
 .wordmark {

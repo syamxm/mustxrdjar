@@ -3,6 +3,9 @@ import Base from '../layouts/Base.astro';
 import Hero from '../components/Hero.astro';
 import Gallery from '../components/Gallery.astro';
 import Lightbox from '../components/Lightbox.astro';
+import About from '../components/About.astro';
+import Contact from '../components/Contact.astro';
+import Footer from '../components/Footer.astro';
 import { painted, nonPainted } from '../data/artworks.js';
 
 const selectedSlugs = ['painted-09', 'painted-13', 'painted-02', 'non-painted-06', 'painted-04'];
@@ -36,6 +39,9 @@ const selected = selectedSlugs.map((slug) => bySlug.get(slug));
       variant="sparse"
       rotScale={0.3}
     />
+    <About />
+    <Contact />
+    <Footer />
   </main>
 
   <Lightbox />
