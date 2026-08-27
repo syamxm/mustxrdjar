@@ -5,6 +5,7 @@ export default defineConfig({
   base: '/',
   output: 'static',
   server: { host: '127.0.0.1', port: 4321 },
+  preview: { host: '127.0.0.1', port: 4321 },
   build: { inlineStylesheets: 'auto' },
   image: {
     responsiveStyles: true,
