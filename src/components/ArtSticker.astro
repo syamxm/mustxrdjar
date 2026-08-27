@@ -1,5 +1,5 @@
 ---
-import { Picture } from 'astro:assets';
+import { Picture, getImage } from 'astro:assets';
 import Sticker from './Sticker.astro';
 
 interface Props {
@@ -14,6 +14,7 @@ interface Props {
   widths?: number[];
   sizes?: string;
   loading?: 'lazy' | 'eager';
+  interactive?: boolean;
   class?: string;
   style?: string;
 }
@@ -23,20 +24,67 @@ const {
   widths = [320, 480, 720, 960],
   sizes = '(max-width: 40rem) 90vw, 30rem',
   loading = 'lazy',
+  interactive = false,
   class: className,
   style,
 } = Astro.props;
+
+const fullWidth = Math.min(1600, artwork.image.width);
+
+const [modern, fallback] = interactive
+  ? await Promise.all([
+      getImage({ src: artwork.image, format: 'avif', width: fullWidth }),
+      getImage({ src: artwork.image, format: 'jpeg', width: fullWidth }),
+    ])
+  : [null, null];
 ---
 
 <Sticker rot={artwork.rot} plate={artwork.plate} class={className} style={style}>
-  <Picture
-    src={artwork.image}
-    formats={['avif', 'webp']}
-    fallbackFormat="jpeg"
-    widths={widths}
-    sizes={sizes}
-    alt={artwork.alt}
-    loading={loading}
-    decoding="async"
-  />
+  {
+    interactive ? (
+      <button
+        type="button"
+        class="art-open"
+        data-modern={modern.src}
+        data-fallback={fallback.src}
+        data-alt={artwork.alt}
+        data-w={fullWidth}
+        data-h={Math.round((fullWidth / artwork.image.width) * artwork.image.height)}
+      >
+        <Picture
+          src={artwork.image}
+          formats={['avif', 'webp']}
+          fallbackFormat="jpeg"
+          widths={widths}
+          sizes={sizes}
+          alt={artwork.alt}
+          loading={loading}
+          decoding="async"
+        />
+        <span class="visually-hidden">open full size</span>
+      </button>
+    ) : (
+      <Picture
+        src={artwork.image}
+        formats={['avif', 'webp']}
+        fallbackFormat="jpeg"
+        widths={widths}
+        sizes={sizes}
+        alt={artwork.alt}
+        loading={loading}
+        decoding="async"
+      />
+    )
+  }
 </Sticker>
+
+<style>
+  .art-open {
+    display: block;
+    width: 100%;
+    padding: 0;
+    border: 0;
+    background: none;
+    cursor: pointer;
+  }
+</style>
