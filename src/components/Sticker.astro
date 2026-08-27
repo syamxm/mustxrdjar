@@ -5,14 +5,22 @@ interface Props {
   peel?: boolean;
   keyline?: boolean;
   class?: string;
+  style?: string;
 }
 
-const { rot = 0, plate = 1, peel = true, keyline = true, class: className } = Astro.props;
+const {
+  rot = 0,
+  plate = 1,
+  peel = true,
+  keyline = true,
+  class: className,
+  style = '',
+} = Astro.props;
 ---
 
 <div
   class:list={['sticker', className, { 'sticker--peel': peel, 'sticker--bare': !keyline }]}
-  style={`--rot:${rot}deg;--plate:var(--plate-${plate})`}
+  style={`--rot:${rot}deg;--plate:var(--plate-${plate});${style}`}
 >
   <div class="sticker__inner"><slot /></div>
 </div>

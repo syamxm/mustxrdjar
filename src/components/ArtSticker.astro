@@ -15,6 +15,7 @@ interface Props {
   sizes?: string;
   loading?: 'lazy' | 'eager';
   class?: string;
+  style?: string;
 }
 
 const {
@@ -23,10 +24,11 @@ const {
   sizes = '(max-width: 40rem) 90vw, 30rem',
   loading = 'lazy',
   class: className,
+  style,
 } = Astro.props;
 ---
 
-<Sticker rot={artwork.rot} plate={artwork.plate} class={className}>
+<Sticker rot={artwork.rot} plate={artwork.plate} class={className} style={style}>
   <Picture
     src={artwork.image}
     formats={['avif', 'webp']}
