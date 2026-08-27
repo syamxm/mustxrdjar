@@ -1,4 +1,6 @@
 ---
+import { getImage } from 'astro:assets';
+import { painted } from '../data/artworks.js';
 import '../styles/fonts.css';
 import '../styles/tokens.css';
 import '../styles/base.css';
@@ -9,6 +11,11 @@ interface Props {
 }
 
 const { title, description } = Astro.props;
+
+const share = painted.find((item) => item.slug === 'painted-06') ?? painted[0];
+const shareImage = await getImage({ src: share.image, format: 'jpeg', width: 1200 });
+const shareUrl = new URL(shareImage.src, Astro.site).href;
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
 ---
 
 <!doctype html>
@@ -18,14 +25,20 @@ const { title, description } = Astro.props;
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
     <meta name="description" content={description} />
-    <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site)} />
-    <link
-      rel="preload"
-      href="/fonts/ga-maamli.woff2"
-      as="font"
-      type="font/woff2"
-      crossorigin
-    />
+    <link rel="canonical" href={canonical} />
+
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <meta name="theme-color" content="#000000" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={shareUrl} />
+    <meta property="og:image:alt" content={share.alt} />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <link rel="preload" href="/fonts/ga-maamli.woff2" as="font" type="font/woff2" crossorigin />
     <link
       rel="preload"
       href="/fonts/bricolage-grotesque.woff2"
@@ -35,6 +48,7 @@ const { title, description } = Astro.props;
     />
   </head>
   <body>
+    <a class="skip" href="#selected">skip to the work</a>
     <slot />
   </body>
 </html>

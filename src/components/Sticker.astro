@@ -28,7 +28,7 @@ const {
 <style>
   .sticker {
     position: relative;
-    rotate: var(--rot);
+    rotate: calc(var(--rot) * var(--rot-scale, 1));
     transition: rotate var(--dur-peel) var(--ease-set);
   }
 
@@ -87,7 +87,7 @@ const {
 
     .sticker--peel:hover,
     .sticker--peel:focus-within {
-      rotate: var(--rot);
+      rotate: calc(var(--rot) * var(--rot-scale, 1));
     }
   }
 </style>
