@@ -1,0 +1,136 @@
+<dialog class="lightbox" aria-label="artwork viewer">
+  <form method="dialog" class="lightbox__close-form">
+    <button class="lightbox__close" value="close" aria-label="close viewer">close</button>
+  </form>
+
+  <figure class="lightbox__figure">
+    <picture>
+      <source class="lightbox__modern" type="image/avif" />
+      <img class="lightbox__img" alt="" />
+    </picture>
+  </figure>
+
+  <div class="lightbox__controls">
+    <button type="button" class="lightbox__step" data-step="-1" aria-label="previous artwork">prev</button>
+    <p class="lightbox__pos" aria-live="polite"></p>
+    <button type="button" class="lightbox__step" data-step="1" aria-label="next artwork">next</button>
+  </div>
+</dialog>
+
+<style>
+  .lightbox {
+    width: fit-content;
+    max-width: 96vw;
+    max-height: 94vh;
+    padding: var(--space-md);
+    border: 0;
+    background: var(--wall);
+    color: var(--paper);
+  }
+
+  .lightbox::backdrop {
+    background: rgb(0 0 0 / 0.92);
+  }
+
+  .lightbox__figure {
+    display: grid;
+    place-items: center;
+    margin: 0;
+  }
+
+  .lightbox__img {
+    max-height: 74vh;
+    width: auto;
+    border: var(--keyline) solid var(--paper);
+  }
+
+  .lightbox__close-form {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .lightbox__close,
+  .lightbox__step {
+    padding: 0.35em 0.9em;
+    border: 0;
+    background: var(--paper);
+    color: var(--wall);
+    font-family: var(--font-display);
+    font-size: var(--text-sm);
+    cursor: pointer;
+  }
+
+  .lightbox__controls {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-md);
+    margin-top: var(--space-md);
+  }
+
+  .lightbox__pos {
+    font-size: var(--text-sm);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    opacity: 0.6;
+  }
+
+  @media (max-width: 40rem) {
+    .lightbox__img {
+      max-height: 62vh;
+    }
+  }
+</style>
+
+<script>
+  const dialog = document.querySelector('.lightbox');
+  const triggers = Array.from(document.querySelectorAll('.art-open'));
+
+  if (dialog instanceof HTMLDialogElement && triggers.length) {
+    const modern = dialog.querySelector('.lightbox__modern');
+    const img = dialog.querySelector('.lightbox__img');
+    const position = dialog.querySelector('.lightbox__pos');
+    let current = 0;
+
+    const show = (index) => {
+      current = (index + triggers.length) % triggers.length;
+      const data = triggers[current].dataset;
+      modern.srcset = data.modern;
+      img.src = data.fallback;
+      img.alt = data.alt;
+      img.width = Number(data.w);
+      img.height = Number(data.h);
+      position.textContent = `${current + 1} / ${triggers.length}`;
+    };
+
+    triggers.forEach((trigger, index) => {
+      trigger.addEventListener('click', () => {
+        show(index);
+        dialog.showModal();
+      });
+    });
+
+    dialog.querySelectorAll('.lightbox__step').forEach((button) => {
+      button.addEventListener('click', () => show(current + Number(button.dataset.step)));
+    });
+
+    dialog.addEventListener('keydown', (event) => {
+      if (event.key === 'ArrowRight') {
+        event.preventDefault();
+        show(current + 1);
+      }
+      if (event.key === 'ArrowLeft') {
+        event.preventDefault();
+        show(current - 1);
+      }
+    });
+
+    dialog.addEventListener('click', (event) => {
+      if (event.target === dialog) dialog.close();
+    });
+
+    dialog.addEventListener('close', () => {
+      triggers[current].focus();
+    });
+  }
+</script>

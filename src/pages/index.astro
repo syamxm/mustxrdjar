@@ -1,6 +1,13 @@
 ---
 import Base from '../layouts/Base.astro';
 import Hero from '../components/Hero.astro';
+import Gallery from '../components/Gallery.astro';
+import Lightbox from '../components/Lightbox.astro';
+import { painted, nonPainted } from '../data/artworks.js';
+
+const selectedSlugs = ['painted-09', 'painted-13', 'painted-02', 'non-painted-06', 'painted-04'];
+const bySlug = new Map([...painted, ...nonPainted].map((item) => [item.slug, item]));
+const selected = selectedSlugs.map((slug) => bySlug.get(slug));
 ---
 
 <Base
@@ -9,5 +16,27 @@ import Hero from '../components/Hero.astro';
 >
   <main class="page">
     <Hero />
+
+    <Gallery id="selected" heading="selected" items={selected} variant="row" rotScale={1} />
+
+    <Gallery
+      id="painted"
+      heading="painted"
+      count="15 pieces"
+      items={painted}
+      variant="dense"
+      rotScale={1}
+    />
+
+    <Gallery
+      id="non-painted"
+      heading="non-painted"
+      count="7 pieces"
+      items={nonPainted}
+      variant="sparse"
+      rotScale={0.3}
+    />
   </main>
+
+  <Lightbox />
 </Base>

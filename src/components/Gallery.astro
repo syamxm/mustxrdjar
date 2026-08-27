@@ -1,0 +1,124 @@
+---
+import ArtSticker from './ArtSticker.astro';
+
+interface Props {
+  id: string;
+  heading: string;
+  count?: string;
+  items: any[];
+  variant: 'row' | 'dense' | 'sparse';
+  rotScale?: number;
+  sizes?: string;
+}
+
+const { id, heading, count, items, variant, rotScale = 1, sizes } = Astro.props;
+
+const defaultSizes = {
+  row: '(max-width: 40rem) 45vw, (max-width: 62rem) 30vw, 18vw',
+  dense: '(max-width: 40rem) 45vw, (max-width: 62rem) 30vw, 25vw',
+  sparse: '(max-width: 40rem) 90vw, 40vw',
+};
+---
+
+<section class="band" id={id}>
+  <header class="band__head">
+    <h2 class="band__title">{heading}</h2>
+    {count && <p class="band__count">{count}</p>}
+  </header>
+
+  <div class:list={['gallery', `gallery--${variant}`]}>
+    {
+      items.map((artwork) => (
+        <ArtSticker
+          artwork={{ ...artwork, rot: Number((artwork.rot * rotScale).toFixed(2)) }}
+          interactive
+          sizes={sizes ?? defaultSizes[variant]}
+          widths={variant === 'sparse' ? [400, 600, 900, 1200] : [280, 420, 640, 900]}
+          class="gallery__item"
+        />
+      ))
+    }
+  </div>
+</section>
+
+<style>
+  .band {
+    padding-block: var(--space-xl);
+  }
+
+  .band__head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: var(--space-md);
+    margin-bottom: var(--space-xl);
+  }
+
+  .band__title {
+    font-size: var(--text-2xl);
+  }
+
+  .band__count {
+    font-size: var(--text-sm);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    opacity: 0.55;
+  }
+
+  .gallery--row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: var(--space-lg);
+  }
+
+  .gallery--row :global(.gallery__item) {
+    flex: 1 1 12rem;
+  }
+
+  .gallery--row :global(.gallery__item:nth-child(even)) {
+    margin-top: var(--space-xl);
+  }
+
+  .gallery--dense {
+    columns: 3;
+    column-gap: var(--space-md);
+  }
+
+  .gallery--dense :global(.gallery__item) {
+    break-inside: avoid;
+    margin-bottom: var(--space-md);
+  }
+
+  .gallery--sparse {
+    columns: 2;
+    column-gap: var(--space-2xl);
+  }
+
+  .gallery--sparse :global(.gallery__item) {
+    break-inside: avoid;
+    margin-bottom: var(--space-2xl);
+  }
+
+  @media (max-width: 62rem) {
+    .gallery--dense {
+      columns: 2;
+    }
+  }
+
+  @media (max-width: 40rem) {
+    .gallery--dense,
+    .gallery--sparse {
+      columns: 1;
+      column-gap: 0;
+    }
+
+    .gallery--sparse :global(.gallery__item) {
+      margin-bottom: var(--space-xl);
+    }
+
+    .gallery--row :global(.gallery__item:nth-child(even)) {
+      margin-top: 0;
+    }
+  }
+</style>
