@@ -1,0 +1,69 @@
+---
+interface Props {
+  rot?: number;
+  plate?: number;
+  face?: string;
+  size?: string;
+  class?: string;
+}
+
+const {
+  rot = -6,
+  plate = 1,
+  face = 'var(--chrome)',
+  size = 'clamp(9rem, 7rem + 12vw, 15rem)',
+  class: className,
+} = Astro.props;
+---
+
+<div
+  class:list={['badge', className]}
+  style={`--rot:${rot}deg;--plate:var(--plate-${plate});--face:${face};--size:${size}`}
+>
+  <div class="badge__inner"><slot /></div>
+</div>
+
+<style>
+  .badge {
+    position: relative;
+    width: var(--size);
+    height: var(--size);
+    rotate: var(--rot);
+  }
+
+  .badge::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    translate: var(--plate-x) var(--plate-y);
+    border-radius: 50%;
+    background: var(--plate);
+  }
+
+  .badge__inner {
+    position: relative;
+    display: grid;
+    place-items: center;
+    width: 100%;
+    height: 100%;
+    padding: var(--keyline);
+    border-radius: 50%;
+    background: var(--paper);
+  }
+
+  .badge__inner > :global(*) {
+    display: grid;
+    place-items: center;
+    width: 100%;
+    height: 100%;
+    padding: 12%;
+    border-radius: 50%;
+    background: var(--face);
+    color: var(--red);
+    font-family: var(--font-display);
+    font-size: clamp(1.1rem, 0.6rem + 2.4vw, 2.1rem);
+    line-height: 0.9;
+    text-align: center;
+    text-transform: lowercase;
+  }
+</style>

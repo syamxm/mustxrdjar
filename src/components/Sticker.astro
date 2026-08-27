@@ -1,0 +1,85 @@
+---
+interface Props {
+  rot?: number;
+  plate?: number;
+  peel?: boolean;
+  keyline?: boolean;
+  class?: string;
+}
+
+const { rot = 0, plate = 1, peel = true, keyline = true, class: className } = Astro.props;
+---
+
+<div
+  class:list={['sticker', className, { 'sticker--peel': peel, 'sticker--bare': !keyline }]}
+  style={`--rot:${rot}deg;--plate:var(--plate-${plate})`}
+>
+  <div class="sticker__inner"><slot /></div>
+</div>
+
+<style>
+  .sticker {
+    position: relative;
+    rotate: var(--rot);
+    transition: rotate var(--dur-peel) var(--ease-set);
+  }
+
+  .sticker::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    translate: var(--plate-x) var(--plate-y);
+    background: var(--plate);
+    transition: translate var(--dur-peel) var(--ease-set);
+  }
+
+  .sticker__inner {
+    position: relative;
+    background: var(--paper);
+    padding: var(--keyline);
+    clip-path: polygon(
+      0 0,
+      calc(100% - var(--peel-size)) 0,
+      100% var(--peel-size),
+      100% 100%,
+      0 100%
+    );
+  }
+
+  .sticker--bare .sticker__inner {
+    background: none;
+    padding: 0;
+  }
+
+  .sticker--peel::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: var(--peel-size);
+    height: var(--peel-size);
+    background: var(--paper-back);
+    clip-path: polygon(100% 0, 0 0, 100% 100%);
+    filter: drop-shadow(-3px 3px 0 rgba(0, 0, 0, 0.6));
+  }
+
+  .sticker--peel:hover,
+  .sticker--peel:focus-within {
+    --peel-size: var(--peel-open);
+    --plate-x: 1rem;
+    --plate-y: 1rem;
+    rotate: 0deg;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .sticker,
+    .sticker::before {
+      transition: none;
+    }
+
+    .sticker--peel:hover,
+    .sticker--peel:focus-within {
+      rotate: var(--rot);
+    }
+  }
+</style>

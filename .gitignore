@@ -1,6 +1,7 @@
 .agents/*
 .claude/*
 skills-lock.json
-
-# mood boards, not shipped
 reference/
+node_modules/
+dist/
+.astro/

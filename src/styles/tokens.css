@@ -1,0 +1,67 @@
+@property --peel-size {
+  syntax: '<length>';
+  inherits: true;
+  initial-value: 0px;
+}
+
+:root {
+  --wall: #000000;
+  --paper: #ffffff;
+  --paper-back: #d7d2c8;
+
+  --red: #e4141b;
+  --orange: #f26430;
+  --chrome: #ffc400;
+  --cobalt: #1b3faf;
+  --grass: #3e8e2e;
+  --gum: #f06e9e;
+
+  --plate-1: var(--red);
+  --plate-2: var(--chrome);
+  --plate-3: var(--cobalt);
+  --plate-4: var(--grass);
+  --plate-5: var(--gum);
+  --plate-6: var(--orange);
+
+  --font-display: 'Ga Maamli', 'Trebuchet MS', 'Arial Black', sans-serif;
+  --font-body: 'Bricolage Grotesque', 'Trebuchet MS', system-ui, sans-serif;
+  --font-marker: 'Permanent Marker', var(--font-display);
+
+  --text-xs: clamp(0.75rem, 0.72rem + 0.15vw, 0.85rem);
+  --text-sm: clamp(0.875rem, 0.83rem + 0.22vw, 1rem);
+  --text-base: clamp(1rem, 0.94rem + 0.3vw, 1.175rem);
+  --text-lg: clamp(1.25rem, 1.1rem + 0.75vw, 1.6rem);
+  --text-xl: clamp(1.75rem, 1.35rem + 2vw, 3rem);
+  --text-2xl: clamp(2.5rem, 1.6rem + 4.5vw, 5.5rem);
+  --text-3xl: clamp(3.5rem, 1.8rem + 8.5vw, 9rem);
+
+  --space-2xs: 0.25rem;
+  --space-xs: 0.5rem;
+  --space-sm: 0.875rem;
+  --space-md: 1.5rem;
+  --space-lg: 2.5rem;
+  --space-xl: clamp(3rem, 2rem + 5vw, 6rem);
+  --space-2xl: clamp(5rem, 3rem + 9vw, 10rem);
+
+  --measure: 58ch;
+  --page-max: 82rem;
+  --page-pad: clamp(1.25rem, 0.6rem + 3vw, 4rem);
+
+  --keyline: clamp(0.5rem, 0.35rem + 0.7vw, 0.9rem);
+  --plate-x: 0.5rem;
+  --plate-y: 0.5rem;
+  --peel-size: 0px;
+  --peel-open: clamp(1.75rem, 1.2rem + 2.5vw, 3rem);
+
+  --ease-set: cubic-bezier(0.2, 0.9, 0.24, 1);
+  --dur-peel: 260ms;
+
+  --z-grain: 3;
+  --z-lightbox: 10;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --dur-peel: 1ms;
+  }
+}
