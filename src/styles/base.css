@@ -6,6 +6,31 @@
 
 html {
   -webkit-text-size-adjust: 100%;
+  scrollbar-color: var(--paper) var(--wall);
+}
+
+::-webkit-scrollbar {
+  width: 14px;
+  height: 14px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--wall);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--paper);
+  background-clip: padding-box;
+  border: 3px solid var(--wall);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--chrome);
+  background-clip: padding-box;
+}
+
+::-webkit-scrollbar-corner {
+  background: var(--wall);
 }
 
 body,
