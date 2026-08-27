@@ -14,7 +14,7 @@ Permanent Marker is Apache 2.0, not OFL. Because the `.woff2` is redistributed f
 
 ## Textures and ornament
 
-No third-party textures are used. The paper grain is an inline SVG `feTurbulence` filter authored in `src/styles/base.css`. Stars, spirals and die-cut edges are authored as SVG in this repo.
+No third-party textures are used. The paper grain is an inline SVG `feTurbulence` filter authored in `src/styles/base.css`, and the background check pattern is an inline SVG tile in `src/styles/tokens.css`. Stars, spirals and die-cut edges are authored as SVG in `src/data/stars.js`.
 
 ## Artwork
 

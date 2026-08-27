@@ -10,7 +10,7 @@ interface Props {
 const {
   rot = -6,
   plate = 1,
-  face = 'var(--chrome)',
+  face = 'var(--accent)',
   size = 'clamp(9rem, 7rem + 12vw, 15rem)',
   class: className,
 } = Astro.props;
@@ -59,7 +59,7 @@ const {
     padding: 12%;
     border-radius: 50%;
     background: var(--face);
-    color: var(--red);
+    color: var(--badge-ink);
     font-family: var(--font-display);
     font-size: calc(var(--size) * 0.092);
     line-height: 0.9;
