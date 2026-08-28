@@ -20,7 +20,7 @@ const collage = [
 ];
 ---
 
-<header class="hero">
+<header class="hero" id="top">
   <div class="hero__stage">
     {
       collage.map(({ art, l, t, w, rot, plate, z }) => (
@@ -69,6 +69,7 @@ const collage = [
 
   .hero__stage {
     position: relative;
+    isolation: isolate;
     aspect-ratio: 2.87 / 1;
   }
 

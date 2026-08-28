@@ -1,5 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
+import Nav from '../components/Nav.astro';
 import Hero from '../components/Hero.astro';
 import Gallery from '../components/Gallery.astro';
 import Lightbox from '../components/Lightbox.astro';
@@ -18,6 +19,8 @@ const selected = selectedSlugs.map((slug) => bySlug.get(slug));
   title="mustxrdjar"
   description="Painted and sketched work by mustxrdjar. Commissions open."
 >
+  <Nav />
+
   <main class="page">
     <Hero />
 
