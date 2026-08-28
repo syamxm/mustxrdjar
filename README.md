@@ -78,6 +78,7 @@ src/
     artworks.js         globs art/, assigns plate colour and rotation deterministically
     alt.js              alt text keyed by slug
     stars.js            five hand-drawn star variants as SVG paths
+    contact.js          email and socials, shared by Nav and Contact
   layouts/Base.astro
   pages/index.astro
   styles/               tokens.css, base.css, fonts.css (generated)
