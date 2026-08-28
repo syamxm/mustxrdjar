@@ -1,4 +1,6 @@
 ---
+import { email, mailto, socials } from '../data/contact.js';
+
 const sections = ['selected', 'painted', 'sketched', 'about', 'commissions'];
 ---
 
@@ -10,24 +12,55 @@ const sections = ['selected', 'painted', 'sketched', 'about', 'commissions'];
       {
         sections.map((id) => (
           <li>
-            <a class="nav__link" href={`#${id}`}>
+            <a class="nav__link" href={`#${id}`} data-nav-link>
               {id}
             </a>
           </li>
         ))
       }
     </ul>
+
+    <button
+      class="nav__burger"
+      type="button"
+      aria-label="menu"
+      aria-expanded="false"
+      aria-controls="nav-menu"
+    >
+      <span></span><span></span>
+    </button>
   </div>
 </nav>
 
+<div class="nav__menu" id="nav-menu" aria-hidden="true">
+  <ul class="nav__menu-list">
+    {
+      sections.map((id, index) => (
+        <li style={`--i:${index}`}>
+          <a class="nav__menu-link" href={`#${id}`} data-nav-link>
+            {id}
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+
+  <div class="nav__menu-foot" style={`--i:${sections.length}`}>
+    <a href={mailto}>{email}</a>
+    {
+      socials.map(({ name, href }) => (
+        <a href={href} rel="me noopener" target="_blank">
+          {name}
+        </a>
+      ))
+    }
+  </div>
+</div>
+
 <script>
-  const links = new Map(
-    [...document.querySelectorAll<HTMLAnchorElement>('.nav__link')].map((link) => [
-      link.hash.slice(1),
-      link,
-    ])
-  );
-  const sectionEls = [...links.keys()]
+  const navLinks = [...document.querySelectorAll<HTMLAnchorElement>('[data-nav-link]')];
+  const ids = [...new Set(navLinks.map((link) => link.hash.slice(1)))];
+  const sectionEls = ids
     .map((id) => document.getElementById(id))
     .filter((section) => section !== null);
 
@@ -35,8 +68,8 @@ const sections = ['selected', 'painted', 'sketched', 'about', 'commissions'];
 
   function markCurrent() {
     const current = sectionEls.find((section) => onScreen.has(section.id));
-    for (const [id, link] of links) {
-      if (current && id === current.id) link.setAttribute('aria-current', 'true');
+    for (const link of navLinks) {
+      if (current && link.hash.slice(1) === current.id) link.setAttribute('aria-current', 'true');
       else link.removeAttribute('aria-current');
     }
   }
@@ -53,6 +86,33 @@ const sections = ['selected', 'painted', 'sketched', 'about', 'commissions'];
   );
 
   for (const section of sectionEls) observer.observe(section);
+
+  const burger = document.querySelector<HTMLButtonElement>('.nav__burger');
+  const menu = document.querySelector<HTMLElement>('.nav__menu');
+  const handheld = window.matchMedia('(max-width: 40rem)');
+
+  if (burger && menu) {
+    const setMenu = (open: boolean) => {
+      burger.classList.toggle('is-open', open);
+      menu.classList.toggle('is-open', open);
+      burger.setAttribute('aria-expanded', String(open));
+      menu.setAttribute('aria-hidden', String(!open));
+      document.body.style.overflowY = open ? 'hidden' : '';
+    };
+
+    burger.addEventListener('click', () => setMenu(!menu.classList.contains('is-open')));
+    menu.addEventListener('click', () => setMenu(false));
+
+    document.addEventListener('keydown', (event) => {
+      if (event.key !== 'Escape' || !menu.classList.contains('is-open')) return;
+      setMenu(false);
+      burger.focus();
+    });
+
+    handheld.addEventListener('change', (event) => {
+      if (!event.matches) setMenu(false);
+    });
+  }
 </script>
 
 <style>
@@ -97,12 +157,6 @@ const sections = ['selected', 'painted', 'sketched', 'about', 'commissions'];
     display: flex;
     gap: var(--space-md);
     margin-inline-start: auto;
-    overflow-x: auto;
-    scrollbar-width: none;
-  }
-
-  .nav__list::-webkit-scrollbar {
-    display: none;
   }
 
   .nav__link {
@@ -130,14 +184,170 @@ const sections = ['selected', 'painted', 'sketched', 'about', 'commissions'];
     text-underline-offset: 0.35em;
   }
 
-  @media (max-width: 34rem) {
-    .nav__mark {
+  /* ---------- burger ---------- */
+
+  .nav__burger {
+    display: none;
+    position: relative;
+    flex: none;
+    margin-inline-start: auto;
+    width: 2.25rem;
+    height: 2.25rem;
+    padding: 0;
+    border: 0;
+    background: none;
+    color: var(--paper);
+    cursor: pointer;
+  }
+
+  .nav__burger span {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 1.25rem;
+    height: 2px;
+    background: currentColor;
+    transition: translate var(--dur-peel) var(--ease-set), rotate var(--dur-peel) var(--ease-set);
+  }
+
+  .nav__burger span:first-child {
+    translate: -50% calc(-50% - 4px);
+  }
+
+  .nav__burger span:last-child {
+    translate: -50% calc(-50% + 4px);
+  }
+
+  .nav__burger.is-open {
+    color: var(--ui);
+  }
+
+  .nav__burger.is-open span:first-child {
+    translate: -50% -50%;
+    rotate: 45deg;
+  }
+
+  .nav__burger.is-open span:last-child {
+    translate: -50% -50%;
+    rotate: -45deg;
+  }
+
+  /* ---------- full-screen menu ---------- */
+
+  .nav__menu {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: var(--z-nav-menu);
+    padding: calc(var(--nav-h) + var(--space-xl)) var(--page-pad) var(--space-xl);
+    overflow-y: auto;
+    background-color: var(--wall);
+    background-image: var(--pattern);
+    background-size: var(--pattern-size);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 320ms var(--ease-set), visibility 320ms var(--ease-set);
+  }
+
+  .nav__menu::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.16;
+    background-image: var(--grain);
+    background-size: var(--grain-size);
+  }
+
+  .nav__menu.is-open {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .nav__menu-list {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .nav__menu-list li,
+  .nav__menu-foot {
+    opacity: 0;
+    translate: 0 1.5rem;
+    transition:
+      opacity 420ms var(--ease-set) calc(60ms + var(--i) * 55ms),
+      translate 420ms var(--ease-set) calc(60ms + var(--i) * 55ms);
+  }
+
+  .nav__menu-list li {
+    border-top: 2px solid color-mix(in srgb, var(--paper) 22%, transparent);
+  }
+
+  .nav__menu-list li:last-child {
+    border-bottom: 2px solid color-mix(in srgb, var(--paper) 22%, transparent);
+  }
+
+  .nav__menu.is-open .nav__menu-list li,
+  .nav__menu.is-open .nav__menu-foot {
+    opacity: 1;
+    translate: 0 0;
+  }
+
+  .nav__menu-link {
+    display: block;
+    padding-block: var(--space-sm);
+    font-family: var(--font-display);
+    font-size: clamp(1.75rem, 10vw, 2.75rem);
+    line-height: 1;
+    text-transform: lowercase;
+    text-decoration: none;
+  }
+
+  .nav__menu-link[aria-current] {
+    color: var(--ui);
+  }
+
+  .nav__menu-foot {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+    margin-top: var(--space-xl);
+  }
+
+  .nav__menu-foot a {
+    font-family: var(--font-display);
+    font-size: var(--text-sm);
+    text-decoration: none;
+    opacity: 0.62;
+  }
+
+  .nav__menu-foot a:hover,
+  .nav__menu-foot a:focus-visible {
+    opacity: 1;
+  }
+
+  @media (max-width: 40rem) {
+    .nav__list {
       display: none;
     }
 
-    .nav__list {
-      margin-inline-start: 0;
-      gap: var(--space-sm);
+    .nav__burger,
+    .nav__menu {
+      display: block;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .nav__burger span,
+    .nav__menu,
+    .nav__menu-list li,
+    .nav__menu-foot {
+      transition-duration: 1ms;
+      transition-delay: 0ms;
+    }
+
+    .nav__menu-list li,
+    .nav__menu-foot {
+      translate: 0 0;
     }
   }
 </style>

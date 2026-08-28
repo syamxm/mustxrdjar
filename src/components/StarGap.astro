@@ -115,9 +115,29 @@ const byId = new Map(stars.map((s) => [s.id, s]));
   }
 
   @media (max-width: 40rem) {
+    .star-gap {
+      height: 7.5rem;
+    }
+
     .star-gap__star {
-      left: clamp(5%, var(--l), 76%);
+      width: min(calc(var(--s) * 0.52), 4.25rem);
+      rotate: calc(var(--r) * 0.5);
       opacity: calc(var(--star-opacity) * 0.85);
+    }
+
+    .star-gap__star:nth-child(1) {
+      left: 6%;
+      top: 6%;
+    }
+
+    .star-gap__star:nth-child(2) {
+      left: 40%;
+      top: 34%;
+    }
+
+    .star-gap__star:nth-child(3) {
+      left: 72%;
+      top: 4%;
     }
 
     .star-gap__star:nth-child(n + 4) {

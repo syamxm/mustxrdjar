@@ -155,5 +155,26 @@ const collage = [
     .hero__stage {
       grid-template-columns: 1fr 1fr;
     }
+
+    .hero__foot {
+      justify-content: center;
+      gap: var(--space-md);
+    }
+
+    .hero__nav {
+      flex: 1 1 100%;
+      flex-wrap: nowrap;
+      gap: var(--space-md);
+    }
+
+    .hero__nav a {
+      flex: 1 1 0;
+      min-width: 0;
+    }
+
+    .hero__word {
+      font-size: var(--text-lg);
+      text-align: center;
+    }
   }
 </style>

@@ -71,6 +71,7 @@
   --accent: var(--chrome);
 
   --z-grain: 3;
+  --z-nav-menu: 4;
   --z-nav: 5;
   --z-lightbox: 10;
 }
