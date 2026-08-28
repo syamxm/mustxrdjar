@@ -38,7 +38,7 @@ const full = interactive
   : null;
 ---
 
-<Sticker rot={artwork.rot} plate={artwork.plate} class={className} style={style}>
+<Sticker rot={artwork.rot} plate={artwork.plate} keyline={false} class={className} style={style}>
   {
     interactive ? (
       <button
@@ -83,6 +83,7 @@ const full = interactive
     padding: 0;
     border: 0;
     background: none;
+    color: inherit;
     cursor: pointer;
   }
 </style>
