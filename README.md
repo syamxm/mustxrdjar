@@ -73,7 +73,7 @@ public/
   favicon.svg           hand-drawn star
   CNAME                 custom domain
 src/
-  components/           Sticker, ArtSticker, Badge, Gallery, Lightbox, Hero, StarGap, About, Contact, Footer
+  components/           Sticker, ArtSticker, Badge, Nav, Gallery, Lightbox, Hero, StarGap, About, Contact, Footer
   data/
     artworks.js         globs art/, assigns plate colour and rotation deterministically
     alt.js              alt text keyed by slug

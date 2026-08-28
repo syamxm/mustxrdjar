@@ -1,7 +1,10 @@
 ---
 import Badge from './Badge.astro';
+import Sticker from './Sticker.astro';
 
-const socials = ['instagram', 'whatsapp', 'tiktok'];
+const email = 'ishamirez5@gmail.com';
+const mailto = `mailto:${email}?subject=${encodeURIComponent('commission')}`;
+const socials = [{ name: 'instagram', href: 'https://instagram.com/mustardjar_' }];
 ---
 
 <section class="band" id="commissions">
@@ -16,18 +19,20 @@ const socials = ['instagram', 'whatsapp', 'tiktok'];
         want made and when you need it.
       </p>
 
-      <!-- CONTACT EMAIL -->
-      <p class="contact__line" data-placeholder>
-        <a href="#" class="contact__email">your@email.here</a>
+      <p class="contact__line">
+        <a class="contact__email" href={mailto}>
+          <Sticker rot={-1.5} plate={3}>
+            <span class="contact__email-word">{email}</span>
+          </Sticker>
+        </a>
       </p>
 
       <ul class="contact__socials">
-        <!-- SOCIAL: instagram -->
-        <!-- SOCIAL: whatsapp -->
-        <!-- SOCIAL: tiktok -->
-        {socials.map((name) => (
+        {socials.map(({ name, href }) => (
           <li>
-            <a href="#" data-placeholder>{name}</a>
+            <a href={href} rel="me noopener" target="_blank">
+              {name}
+            </a>
           </li>
         ))}
       </ul>
@@ -60,9 +65,22 @@ const socials = ['instagram', 'whatsapp', 'tiktok'];
     font-size: 1.25em;
   }
 
+  .contact__line {
+    display: flex;
+  }
+
   .contact__email {
+    text-decoration: none;
+  }
+
+  .contact__email-word {
+    display: block;
+    padding: 0.1em 0.4em 0.24em;
+    background: var(--ink);
+    color: var(--paper);
     font-family: var(--font-display);
-    font-size: var(--text-xl);
+    font-size: clamp(0.9rem, 0.55rem + 2.2vw, 1.75rem);
+    line-height: 0.9;
   }
 
   .contact__socials {

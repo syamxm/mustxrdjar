@@ -1,0 +1,143 @@
+---
+const sections = ['selected', 'painted', 'sketched', 'about', 'commissions'];
+---
+
+<nav class="nav" aria-label="sections">
+  <div class="nav__inner">
+    <a class="nav__mark" href="#top">mustxrdjar</a>
+
+    <ul class="nav__list">
+      {
+        sections.map((id) => (
+          <li>
+            <a class="nav__link" href={`#${id}`}>
+              {id}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</nav>
+
+<script>
+  const links = new Map(
+    [...document.querySelectorAll<HTMLAnchorElement>('.nav__link')].map((link) => [
+      link.hash.slice(1),
+      link,
+    ])
+  );
+  const sectionEls = [...links.keys()]
+    .map((id) => document.getElementById(id))
+    .filter((section) => section !== null);
+
+  const onScreen = new Set<string>();
+
+  function markCurrent() {
+    const current = sectionEls.find((section) => onScreen.has(section.id));
+    for (const [id, link] of links) {
+      if (current && id === current.id) link.setAttribute('aria-current', 'true');
+      else link.removeAttribute('aria-current');
+    }
+  }
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      for (const entry of entries) {
+        if (entry.isIntersecting) onScreen.add(entry.target.id);
+        else onScreen.delete(entry.target.id);
+      }
+      markCurrent();
+    },
+    { rootMargin: '-20% 0px -55% 0px' }
+  );
+
+  for (const section of sectionEls) observer.observe(section);
+</script>
+
+<style>
+  .nav {
+    position: fixed;
+    inset-block-start: 0;
+    inset-inline: 0;
+    z-index: var(--z-nav);
+    height: var(--nav-h);
+    background: var(--ink);
+    border-bottom: 2px solid var(--paper);
+  }
+
+  .nav::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.16;
+    background-image: var(--grain);
+    background-size: var(--grain-size);
+  }
+
+  .nav__inner {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    width: min(100% - var(--page-pad) * 2, var(--page-max));
+    height: 100%;
+    margin-inline: auto;
+  }
+
+  .nav__mark {
+    flex: none;
+    font-family: var(--font-display);
+    font-size: var(--text-sm);
+    text-transform: lowercase;
+    text-decoration: none;
+  }
+
+  .nav__list {
+    display: flex;
+    gap: var(--space-md);
+    margin-inline-start: auto;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .nav__list::-webkit-scrollbar {
+    display: none;
+  }
+
+  .nav__link {
+    display: block;
+    padding-block: 0.4em;
+    font-family: var(--font-display);
+    font-size: var(--text-xs);
+    letter-spacing: 0.08em;
+    text-transform: lowercase;
+    text-decoration: none;
+    white-space: nowrap;
+    opacity: 0.62;
+  }
+
+  .nav__link:hover,
+  .nav__link:focus-visible {
+    opacity: 1;
+  }
+
+  .nav__link[aria-current] {
+    color: var(--ui);
+    opacity: 1;
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 0.35em;
+  }
+
+  @media (max-width: 34rem) {
+    .nav__mark {
+      display: none;
+    }
+
+    .nav__list {
+      margin-inline-start: 0;
+      gap: var(--space-sm);
+    }
+  }
+</style>
