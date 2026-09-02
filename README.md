@@ -1,4 +1,6 @@
 # mustxrdjar
+# TODO: Change Font for General Explanation (syamxm)
+# TODO: OPEN Text make it CAPS, BOLD and Bigger (syamxm)
 
 Portfolio site for the artist **mustxrdjar** — 15 painted works and 7 sketched, plus commissions.
 
