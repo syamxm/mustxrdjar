@@ -6,8 +6,6 @@ Portfolio site for the artist **mustxrdjar** — 15 painted works and 7 sketched
 
 Astro, static output, plain CSS with custom properties, vanilla JS. Two runtime dependencies: `astro` and `sharp`.
 
-Live at **https://mustxrdjar.syamxm.com**
-
 ## Requirements
 
 Node **24.20.0** (pinned in `.node-version`; Astro 7 requires ≥ 22.12).
